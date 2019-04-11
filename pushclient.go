@@ -12,6 +12,7 @@ const (
 	SUCCESS_FLAG  = "msg_id"
 	HOST_NAME_SSL = "https://api.jpush.cn/v3/push"
 	HOST_SCHEDULE = "https://api.jpush.cn/v3/schedules"
+	HOST_CID      = "https://api.jpush.cn/v3/push/cid"
 	HOST_REPORT   = "https://report.jpush.cn/v3/received"
 	BASE64_TABLE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 )
@@ -89,6 +90,15 @@ func (this *PushClient) SendScheduleBytes(content []byte, url string) (string, e
 		return "", errors.New(ret)
 	}
 
+}
+
+type CidList struct {
+	CidList []string `json:"cidlist"`
+}
+
+func (this *PushClient) GetCid() (list CidList, err error) {
+	err = Get(HOST_CID).SetBasicAuth(this.AppKey, this.MasterSecret).Param("count", "1").ToJson(&list)
+	return
 }
 
 func (this *PushClient) SendGetReportRequest(msg_ids string, url string) (string, error) {
