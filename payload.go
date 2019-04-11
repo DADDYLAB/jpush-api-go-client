@@ -10,6 +10,7 @@ type PayLoad struct {
 	Notification interface{} `json:"notification,omitempty"`
 	Message      interface{} `json:"message,omitempty"`
 	Options      *Option     `json:"options,omitempty"`
+	CID          string      `json:"cid,omitempty"`
 }
 
 func NewPushPayLoad() *PayLoad {
@@ -38,6 +39,10 @@ func (this *PayLoad) SetMessage(m *Message) {
 
 func (this *PayLoad) SetNotice(notice *Notice) {
 	this.Notification = notice
+}
+
+func (this *PayLoad) SetCID(cid string) {
+	this.CID = cid
 }
 
 func (this *PayLoad) ToBytes() ([]byte, error) {
